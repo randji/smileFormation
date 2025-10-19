@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 export function SiteHeader() {
   return (
     <header className="border-b bg-background">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-16 items-center justify-center md:justify-between px-4">
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/Smile.jpg"
@@ -62,7 +62,7 @@ export function SiteHeader() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           <Button
             variant="outline"
             className="rounded-full bg-transparent border-[color:var(--smile-navy)] text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-yellow)] hover:text-[#111827]"

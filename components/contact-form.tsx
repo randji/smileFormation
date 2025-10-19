@@ -71,12 +71,12 @@ export function ContactForm({
       <div className="mx-auto max-w-3xl rounded-lg border bg-card p-6 shadow-sm">
         {/* Personnalisez le titre/texte ci-dessous via les props ou passez-les depuis content/home.ts */}
         <h2
-          className="mb-2 text-3xl font-semibold"
+          className="mb-2 text-3xl font-semibold text-center sm:text-left"
           style={{ color: "var(--smile-navy)" }}
         >
           {title}
         </h2>
-        <p className="mb-6 text-sm text-muted-foreground">{description}</p>
+        <p className="mb-6 text-sm text-muted-foreground text-center sm:text-left">{description}</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-1">
@@ -169,4 +169,3 @@ export function ContactForm({
     </section>
   )
 }
-

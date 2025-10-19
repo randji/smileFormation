@@ -13,15 +13,15 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="container mx-auto px-4 py-16">
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <h1
-            className="mb-8 text-5xl font-light uppercase tracking-wide lg:text-6xl"
+            className="mb-8 text-center lg:text-left text-4xl sm:text-5xl font-light uppercase tracking-wide lg:text-6xl"
             style={{ color: "var(--smile-navy)" }}
           >
             {title}
           </h1>
-          <div className="space-y-4 text-foreground/80 leading-relaxed">
+          <div className="space-y-4 text-center lg:text-left text-foreground/80 leading-relaxed">
             {description.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
@@ -31,11 +31,11 @@ export function HeroSection({
         {certificationImage && (
           <div className="flex-shrink-0">
             <Image
-              src={certificationImage || "/logoSmile.jpg"}
+              src={certificationImage || "/Smile.jpg"}
               alt="Certification Qualiopi"
               width={200}
               height={200}
-              className="h-auto w-80"
+              className="h-auto w-80 mx-auto lg:mx-0"
             />
           </div>
         )}
