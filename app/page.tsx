@@ -21,6 +21,10 @@ export default function FormationsPage() {
           logoOpen={hero.logoOpen}
           logoWink={hero.logoWink}
           textRevealDuration={hero.logoTextDuration}
+          smileySizes={hero.smileySizes}
+          blinkDuration={hero.logoBlinkDuration}
+          blinkInterval={hero.logoBlinkInterval}
+          startDelay={hero.logoStartDelay}
         />
 
         <TrainingsSection tabs={tabs} trainings={trainings} />

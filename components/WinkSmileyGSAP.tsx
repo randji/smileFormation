@@ -16,6 +16,8 @@ type Props = {
   textSrc?: string
   // Durée de l'animation de descente/affichage du texte (secondes)
   textRevealDuration?: number
+  // Valeur du props `sizes` de next/image pour éviter tout swap de source
+  imageSizes?: string
 }
 
 export default function WinkSmileyGSAP({
@@ -27,6 +29,7 @@ export default function WinkSmileyGSAP({
   winkSrc,
   textSrc = "/texteSmile.jpg",
   textRevealDuration = 0.6,
+  imageSizes,
 }: Props) {
   // Réfs pour le mode SVG
   const eyeRightRef = useRef<SVGRectElement | null>(null)
@@ -89,11 +92,14 @@ export default function WinkSmileyGSAP({
   if (openSrc && winkSrc) {
     return (
       <div className="select-none" aria-label="Smiley qui fait un clin d’œil">
-        <div style={{ width: size, height: size }} className="relative z-[1] mx-auto">
-          <Image src={openSrc} alt="Smiley" fill className="object-contain" sizes={`${size}px`} priority={false} />
+        <div
+          style={{ width: `var(--smiley-size, ${size}px)`, height: `var(--smiley-size, ${size}px)` }}
+          className="relative z-[1] mx-auto"
+        >
+          <Image src={openSrc} alt="Smiley" fill className="object-contain" sizes={imageSizes ?? `${size}px`} priority={false} />
           {/* Masqué initialement pour éviter tout flash avant l'animation */}
           <div ref={winkRef} className="absolute inset-0 opacity-0" style={{ opacity: 0 }}>
-            <Image src={winkSrc} alt="Smiley qui cligne" fill className="object-contain" sizes={`${size}px`} />
+            <Image src={winkSrc} alt="Smiley qui cligne" fill className="object-contain" sizes={imageSizes ?? `${size}px`} />
           </div>
         </div>
         {/* Texte sous le smiley, masqué et légèrement au-dessus au chargement (évite flicker) */}
@@ -109,6 +115,7 @@ export default function WinkSmileyGSAP({
               width={Math.round(size)}
               height={Math.round(size / 4)}
               className="object-contain"
+              style={{ width: `var(--smiley-size, ${size}px)` }}
             />
           </div>
         )}
@@ -126,6 +133,7 @@ export default function WinkSmileyGSAP({
         role="img"
         aria-label="Smiley qui fait un clin d’œil"
         className="relative z-[1] mx-auto"
+        style={{ width: `var(--smiley-size, ${size}px)`, height: `var(--smiley-size, ${size}px)` }}
       >
         <path d="M35 130 Q100 170 165 130" fill="none" stroke={color} strokeWidth="18" strokeLinecap="round" />
         <rect x="55" y="50" width="22" height="50" rx="11" fill={color} />
@@ -143,6 +151,7 @@ export default function WinkSmileyGSAP({
             width={Math.round(size)}
             height={Math.round(size / 4)}
             className="object-contain"
+            style={{ width: `var(--smiley-size, ${size}px)` }}
           />
         </div>
       )}

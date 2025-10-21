@@ -14,6 +14,16 @@ export const hero = {
   logoWink: "/logoSmileClose.png",
   // Durée de la descente/affichage du texte sous le logo (secondes)
   logoTextDuration: 0.9,
+  // Tailles responsives du logo (px) : base < md, md ≥ 768px, lg ≥ 1024px, xl ≥ 1280px
+  smileySizes: { base: 160, md: 220, lg: 260, xl: 300 },
+  // Timings de l'animation (secondes)
+  // - logoBlinkDuration: durée totale d'un clin d'œil
+  // - logoBlinkInterval: délai avant le clin d'œil (si rejoué plus tard)
+  logoBlinkDuration: 0.82,
+  logoBlinkInterval: 3.4,
+  // Délai avant d'afficher/commencer l'animation du logo (secondes)
+  // Mettez 0 pour démarrer immédiatement
+  logoStartDelay: 0,
 };
 
 export const tabs: string[] = ["Langues", "Bureautique", "IA", "Tous"];
