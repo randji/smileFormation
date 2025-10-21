@@ -1,7 +1,6 @@
 import { SiteHeader } from "@/components/site-header"
 import { HeroSection } from "@/components/hero-section"
-import { FilterTabs } from "@/components/filter-tabs"
-import { TrainingGrid } from "@/components/training-grid"
+import { TrainingsSection } from "@/components/trainings-section"
 import { LoadMoreSection } from "@/components/load-more-section"
 import { SiteFooter } from "@/components/site-footer"
 import { hero, tabs, trainings, contactSection } from "@/content/home"
@@ -13,11 +12,18 @@ export default function FormationsPage() {
       <SiteHeader />
 
       <main>
-        <HeroSection title={hero.title} description={hero.description} certificationImage={hero.certificationImage} />
+        <HeroSection
+          title={hero.title}
+          description={hero.description}
+          certificationImage={hero.certificationImage}
+          // Active l’animation GSAP si configurée dans le contenu
+          useAnimatedLogo={hero.useAnimatedLogo}
+          logoOpen={hero.logoOpen}
+          logoWink={hero.logoWink}
+          textRevealDuration={hero.logoTextDuration}
+        />
 
-        <FilterTabs tabs={tabs} />
-
-        <TrainingGrid trainings={trainings} />
+        <TrainingsSection tabs={tabs} trainings={trainings} />
 
         <LoadMoreSection />
 
@@ -34,4 +40,3 @@ export default function FormationsPage() {
     </div>
   )
 }
-

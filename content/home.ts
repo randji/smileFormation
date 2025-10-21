@@ -6,10 +6,17 @@ export const hero = {
     "Centre de formation professionnelle spécialisé en langues (français, anglais, espagnol...), bureautique (Word, Excel, PowerPoint) et intelligence artificielle.",
     "Notre pédagogie est orientée résultats: parcours sur-mesure, exercices pratiques, et accompagnement individualisé. La formation qui vous donne le sourire.",
   ],
-  certificationImage: "/logoSmile.jpg",
+  certificationImage: "/Smile.jpg",
+  // Active le smiley animé GSAP à la place de l'image
+  useAnimatedLogo: true,
+  // Images fournies par le client (mode images GSAP)
+  logoOpen: "/Smile.jpg",
+  logoWink: "/logoSmileClose.png",
+  // Durée de la descente/affichage du texte sous le logo (secondes)
+  logoTextDuration: 0.9,
 };
 
-export const tabs: string[] = ["Tous", "Langues", "Bureautique", "IA"];
+export const tabs: string[] = ["Langues", "Bureautique", "IA", "Tous"];
 
 export const trainings: TrainingCardProps[] = [
   {

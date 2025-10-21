@@ -1,15 +1,29 @@
+"use client"
+
 import Image from "next/image";
+import WinkSmileyGSAP from "@/components/WinkSmileyGSAP";
 
 interface HeroSectionProps {
   title: string;
   description: string[];
   certificationImage?: string;
+  // Si true, on affiche le smiley animé GSAP à la place de l'image
+  useAnimatedLogo?: boolean;
+  // Sources image (ouverts/clin d'œil) si vous préférez utiliser vos PNG/JPG
+  logoOpen?: string;
+  logoWink?: string;
+  // Durée de l'apparition/descente du texte sous le logo (s)
+  textRevealDuration?: number;
 }
 
 export function HeroSection({
   title,
   description,
   certificationImage,
+  useAnimatedLogo,
+  logoOpen,
+  logoWink,
+  textRevealDuration,
 }: HeroSectionProps) {
   return (
     <section className="container mx-auto px-4 py-16">
@@ -28,17 +42,32 @@ export function HeroSection({
           </div>
         </div>
 
-        {certificationImage && (
-          <div className="flex-shrink-0">
-            <Image
-              src={certificationImage || "/Smile.jpg"}
-              alt="Certification Qualiopi"
-              width={200}
-              height={200}
-              className="h-auto w-80 mx-auto lg:mx-0"
-            />
-          </div>
-        )}
+        <div className="flex-shrink-0">
+          {useAnimatedLogo ? (
+            <div className="mx-auto lg:mx-0">
+              <WinkSmileyGSAP
+                size={160}
+                color="#FFB80F"
+                interval={2.4}
+                blinkDuration={0.82}
+                openSrc={logoOpen}
+                winkSrc={logoWink}
+                textSrc="/texteSmile.jpg"
+                textRevealDuration={textRevealDuration}
+              />
+            </div>
+          ) : (
+            certificationImage && (
+              <Image
+                src={certificationImage || "/Smile.jpg"}
+                alt="smile formation logo"
+                width={200}
+                height={200}
+                className="h-auto w-80 mx-auto lg:mx-0"
+              />
+            )
+          )}
+        </div>
       </div>
     </section>
   );
