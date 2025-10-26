@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section"
 import { TrainingsSection } from "@/components/trainings-section"
 import { LoadMoreSection } from "@/components/load-more-section"
 import { SiteFooter } from "@/components/site-footer"
+import { PresenteeismSection } from "@/components/presenteeism-section"
 import { hero, tabs, trainings, contactSection } from "@/content/home"
 import { ContactForm } from "@/components/contact-form"
 
@@ -31,13 +32,16 @@ export default function FormationsPage() {
 
         <LoadMoreSection />
 
-        {/* Section de contact - s'affiche juste avant le footer */}
+        {/* Section de contact */}
         <ContactForm
           // Textes centralisés dans content/home.ts
           title={contactSection.title}
           description={contactSection.description}
           submitLabel={contactSection.submitLabel}
         />
+
+        {/* Badge présentéisme juste avant le footer */}
+        <PresenteeismSection />
       </main>
 
       <SiteFooter />
