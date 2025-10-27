@@ -2,9 +2,8 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  experimental: {
-    typedRoutes: true,
-  },
+  // `typedRoutes` moved out of `experimental` in Next.js 15
+  typedRoutes: true,
   images: {
     // All images used are local in /public
     dangerouslyAllowSVG: true,
@@ -12,4 +11,3 @@ const nextConfig: NextConfig = {
 }
 
 export default nextConfig
-
