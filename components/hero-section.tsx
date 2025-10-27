@@ -20,6 +20,8 @@ interface HeroSectionProps {
   // Timings de clin d'œil
   blinkDuration?: number;
   blinkInterval?: number;
+  // Délai (en secondes) avant d'afficher/commencer l'animation du logo
+  startDelay?: number;
 }
 
 export function HeroSection({
@@ -33,6 +35,7 @@ export function HeroSection({
   smileySizes,
   blinkDuration,
   blinkInterval,
+  startDelay,
 }: HeroSectionProps) {
   const sizes = {
     base: 160,
@@ -45,9 +48,10 @@ export function HeroSection({
   // Masquer le logo jusqu'au montage pour éviter l'effet "petit puis grand"
   const [showLogo, setShowLogo] = useState(false);
   useEffect(() => {
-    const id = setTimeout(() => setShowLogo(true), 0);
+    const delayMs = Math.max(0, (startDelay ?? 0) * 1000);
+    const id = setTimeout(() => setShowLogo(true), delayMs);
     return () => clearTimeout(id);
-  }, []);
+  }, [startDelay]);
   // Calcule une taille numérique côté client pour passer à `size={...}`
   const [currentSize, setCurrentSize] = useState<number>(sizes.base);
   useEffect(() => {
