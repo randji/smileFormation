@@ -13,7 +13,7 @@ export interface TrainingCardProps {
 
 export function TrainingCard({ title, category, imageUrl, type, duration, contactText }: TrainingCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-lg">
+    <div className="group relative w-full max-w-md mx-auto overflow-hidden rounded-lg">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image src={imageUrl || "/placeholder.svg"} alt={title} fill className="object-cover" />

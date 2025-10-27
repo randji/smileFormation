@@ -1,9 +1,9 @@
 import { SiteHeader } from "@/components/site-header"
 import { HeroSection } from "@/components/hero-section"
 import { TrainingsSection } from "@/components/trainings-section"
-import { LoadMoreSection } from "@/components/load-more-section"
 import { SiteFooter } from "@/components/site-footer"
 import { PresenteeismSection } from "@/components/presenteeism-section"
+import { LastUpdatedSection } from "@/components/last-updated-section"
 import { hero, tabs, trainings, contactSection } from "@/content/home"
 import { ContactForm } from "@/components/contact-form"
 
@@ -30,7 +30,6 @@ export default function FormationsPage() {
 
         <TrainingsSection tabs={tabs} trainings={trainings} />
 
-        <LoadMoreSection />
 
         {/* Section de contact */}
         <ContactForm
@@ -40,8 +39,11 @@ export default function FormationsPage() {
           submitLabel={contactSection.submitLabel}
         />
 
-        {/* Badge présentéisme juste avant le footer */}
+        {/* Badge présentéisme */}
         <PresenteeismSection />
+
+        {/* Mise à jour mensuelle (mois + année) */}
+        <LastUpdatedSection />
       </main>
 
       <SiteFooter />
