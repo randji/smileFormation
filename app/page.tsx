@@ -4,7 +4,7 @@ import { TrainingsSection } from "@/components/trainings-section"
 import { SiteFooter } from "@/components/site-footer"
 import { PresenteeismSection } from "@/components/presenteeism-section"
 import { LastUpdatedSection } from "@/components/last-updated-section"
-import { hero, tabs, trainings, contactSection } from "@/content/home"
+import { hero, tabs, trainings, contactSection, trainingLinks } from "@/content/home"
 import { ContactForm } from "@/components/contact-form"
 
 export default function FormationsPage() {
@@ -28,7 +28,13 @@ export default function FormationsPage() {
           startDelay={hero.logoStartDelay}
         />
 
-        <TrainingsSection tabs={tabs} trainings={trainings} />
+        <TrainingsSection
+          tabs={tabs}
+          trainings={trainings.map((t) => ({
+            ...t,
+            href: trainingLinks[t.title] ?? (t.title.toLowerCase().includes("word") ? "/formations/word" : t.href),
+          }))}
+        />
 
 
         {/* Section de contact */}

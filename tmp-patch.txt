@@ -1,0 +1,21 @@
+*** Begin Patch
+*** Update File: content/home.ts
+@@
+-    imageUrl: "/business-meeting-silhouettes-professional.jpg",
++    imageUrl: "/Smile.jpg",
+@@
+-    imageUrl: "/code-on-computer-screen-data-privacy.jpg",
++    imageUrl: "/Smile.jpg",
+@@
+-    imageUrl: "/blue-technology-keyboard-close-up.jpg",
++    imageUrl: "/Smile.jpg",
+@@
+-    imageUrl: "/code-on-computer-screen-data-privacy.jpg",
++    imageUrl: "/Smile.jpg",
+@@
+-    imageUrl: "/business-meeting-silhouettes-professional.jpg",
++    imageUrl: "/Smile.jpg",
+@@
+-    imageUrl: "/code-on-computer-screen-data-privacy.jpg",
++    imageUrl: "/Smile.jpg",
+*** End Patch

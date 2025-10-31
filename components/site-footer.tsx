@@ -42,11 +42,15 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
-          <Link href="#" className="hover:text-foreground">
+          <Link href="/conditions-generales" className="hover:text-foreground">
+            Conditions générales de vente
+          </Link>
+          <span>|</span>
+          <Link href="/mentions-legales" className="hover:text-foreground">
             Mentions légales
           </Link>
           <span>|</span>
-          <Link href="#" className="hover:text-foreground">
+          <Link href="/confidentialite" className="hover:text-foreground">
             Politique de confidentialité
           </Link>
         </div>

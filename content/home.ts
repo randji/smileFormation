@@ -32,7 +32,7 @@ export const trainings: TrainingCardProps[] = [
   {
     title: "Français langue étrangère (FLE) – niveaux A1 à C1",
     category: "Langues",
-    imageUrl: "/business-meeting-silhouettes-professional.jpg",
+    imageUrl: "/Smile.jpg",
     type: "Inter / Intra-entreprise",
     duration: "Cycle 14 à 35h",
     contactText: "Nous contacter",
@@ -40,7 +40,7 @@ export const trainings: TrainingCardProps[] = [
   {
     title: "Anglais professionnel – communication et réunions",
     category: "Langues",
-    imageUrl: "/code-on-computer-screen-data-privacy.jpg",
+    imageUrl: "/Smile.jpg",
     type: "Inter / Intra-entreprise",
     duration: "Cycle 14 à 21h",
     contactText: "Nous contacter",
@@ -48,7 +48,7 @@ export const trainings: TrainingCardProps[] = [
   {
     title: "Espagnol – conversation et écrits pro",
     category: "Langues",
-    imageUrl: "/blue-technology-keyboard-close-up.jpg",
+    imageUrl: "/Smile.jpg",
     type: "Inter / Intra-entreprise",
     duration: "Cycle 14 à 21h",
     contactText: "Nous contacter",
@@ -56,7 +56,7 @@ export const trainings: TrainingCardProps[] = [
   {
     title: "Word – niveau intermédiaire",
     category: "Bureautique",
-    imageUrl: "/code-on-computer-screen-data-privacy.jpg",
+    imageUrl: "/Smile.jpg",
     type: "Atelier pratique",
     duration: "1 à 2 jours",
     contactText: "Nous contacter",
@@ -72,7 +72,7 @@ export const trainings: TrainingCardProps[] = [
   {
     title: "IA – initiation et usages métiers",
     category: "IA",
-    imageUrl: "/business-meeting-silhouettes-professional.jpg",
+    imageUrl: "/Smile.jpg",
     type: "Workshop",
     duration: "1 journée",
     contactText: "Nous contacter",
@@ -80,7 +80,7 @@ export const trainings: TrainingCardProps[] = [
   {
     title: "IA – prompt engineering pour débutants",
     category: "IA",
-    imageUrl: "/code-on-computer-screen-data-privacy.jpg",
+    imageUrl: "/Smile.jpg",
     type: "Workshop",
     duration: "1 journée",
     contactText: "Nous contacter",
@@ -96,4 +96,9 @@ export const contactSection = {
     "Parlez-nous de votre projet (langues, bureautique, IA) et nous revenons vers vous sous 24h.",
   // Libellé du bouton d’envoi
   submitLabel: "Envoyer ma demande",
+};
+
+// Liens vers les pages formations détaillées (configurable)
+export const trainingLinks: Record<string, string> = {
+  "Word - niveau interm�diaire": "/formations/word",
 };

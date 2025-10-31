@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Settings, Clock, Mail } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export interface TrainingCardProps {
   title: string
@@ -9,9 +10,10 @@ export interface TrainingCardProps {
   type: string
   duration: string
   contactText: string
+  href?: string
 }
 
-export function TrainingCard({ title, category, imageUrl, type, duration, contactText }: TrainingCardProps) {
+export function TrainingCard({ title, category, imageUrl, type, duration, contactText, href }: TrainingCardProps) {
   return (
     <div className="group relative w-full max-w-md mx-auto overflow-hidden rounded-lg">
       {/* Background Image */}
@@ -43,12 +45,21 @@ export function TrainingCard({ title, category, imageUrl, type, duration, contac
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            className="rounded-full border-white bg-transparent text-white hover:bg-[color:var(--smile-yellow)] hover:text-[#111827] h-9 px-4"
-          >
-            En savoir +
-          </Button>
+          {href ? (
+            <Link
+              href={href as any}
+              className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none rounded-full border border-white bg-transparent text-white hover:bg-[color:var(--smile-yellow)] hover:text-[#111827] h-9 px-4"
+            >
+              En savoir +
+            </Link>
+          ) : (
+            <Button
+              variant="outline"
+              className="rounded-full border-white bg-transparent text-white hover:bg-[color:var(--smile-yellow)] hover:text-[#111827] h-9 px-4"
+            >
+              En savoir +
+            </Button>
+          )}
         </div>
       </div>
     </div>
