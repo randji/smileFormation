@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
 
 export function SiteHeader() {
   return (
@@ -24,19 +22,19 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <Link
+          {/* <Link
             href="#"
             className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
           >
             Centre
-          </Link>
+          </Link> */}
           <Link
-            href="#"
+            href="/formations/word"
             className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
           >
             Formations
           </Link>
-          <Link
+          {/* <Link
             href="#"
             className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
           >
@@ -59,17 +57,17 @@ export function SiteHeader() {
             className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
           >
             Contact
-          </Link>
+          </Link> */}
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          <Button
-            variant="outline"
-            className="rounded-full bg-transparent border-[color:var(--smile-navy)] text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-yellow)] hover:text-[#111827]"
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 rounded-full border bg-transparent border-[color:var(--smile-navy)] text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-yellow)] hover:text-[#111827]"
           >
             Contact
-          </Button>
-          <Link
+          </Link>
+          {/* <Link
             href="#"
             className="flex h-8 w-8 items-center justify-center rounded-full border hover:bg-accent"
           >
@@ -77,8 +75,8 @@ export function SiteHeader() {
             <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
             </svg>
-          </Link>
-          <button className="text-sm font-medium">FR EN</button>
+          </Link> */}
+          {/* <button className="text-sm font-medium">FR EN</button> */}
         </div>
       </div>
     </header>

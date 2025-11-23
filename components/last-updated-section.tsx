@@ -8,7 +8,7 @@ export function LastUpdatedSection() {
     <section>
       <div className="container mx-auto px-4 py-6">
         <p className="text-center text-xs md:text-sm text-muted-foreground">
-          Mise à jour le {formatted}
+          Mise à jour le 5 {formatted}
         </p>
       </div>
     </section>

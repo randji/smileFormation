@@ -1,42 +1,39 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 
 // Public, reusable schema so you can re-use it server-side as well
 export const contactSchema = z.object({
+  firstName: z.string().min(2, "Prénom trop court"),
   name: z.string().min(2, "Nom trop court"),
   email: z.string().email("Email invalide"),
   phone: z.string().optional(),
-  subject: z
-    .string()
-    .min(2, "Sujet requis")
-    .max(120, "Sujet trop long"),
+  subject: z.string().min(2, "Sujet requis").max(120, "Sujet trop long"),
   message: z.string().min(10, "Message trop court"),
-})
+});
 
-export type ContactFormValues = z.infer<typeof contactSchema>
+export type ContactFormValues = z.infer<typeof contactSchema>;
 
 export interface ContactFormProps {
   // API endpoint to submit to. Change this if you deploy behind a custom route.
   // Ex: "/api/contact" (par défaut)
-  action?: string
+  action?: string;
   // Labels personnalisables si besoin
-  title?: string
-  description?: string
-  submitLabel?: string
+  title?: string;
+  description?: string;
+  submitLabel?: string;
   // Hook de succès si vous voulez gérer un tracking ou un toast externe
-  onSuccess?: (data: ContactFormValues) => void
+  onSuccess?: (data: ContactFormValues) => void;
 }
 
 export function ContactForm({
   action = "/api/contact",
   title = "Contactez-nous",
-  description =
-    "Une question sur nos formations (langues, bureautique, IA) ? Laissez-nous un message et nous vous répondrons rapidement.",
+  description = "Une question sur nos formations ? Laissez-nous un message et nous vous répondrons rapidement.",
   submitLabel = "Envoyer",
   onSuccess,
 }: ContactFormProps) {
@@ -45,30 +42,30 @@ export function ContactForm({
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<ContactFormValues>({ resolver: zodResolver(contactSchema) })
+  } = useForm<ContactFormValues>({ resolver: zodResolver(contactSchema) });
 
-  const [status, setStatus] = React.useState<"idle" | "ok" | "error">("idle")
+  const [status, setStatus] = React.useState<"idle" | "ok" | "error">("idle");
 
   const onSubmit = async (values: ContactFormValues) => {
-    setStatus("idle")
+    setStatus("idle");
     try {
       const res = await fetch(action, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-      })
-      if (!res.ok) throw new Error("Request failed")
-      setStatus("ok")
-      onSuccess?.(values)
-      reset()
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setStatus("ok");
+      onSuccess?.(values);
+      reset();
     } catch (e) {
-      setStatus("error")
+      setStatus("error");
     }
-  }
+  };
 
   return (
     <section className="container mx-auto px-4 py-12">
-      <div className="mx-auto max-w-3xl rounded-lg border bg-card p-6 shadow-sm">
+      <div className="mx-auto max-w-3xl rounded-lg border bg-card p-6 shadow-lg">
         {/* Personnalisez le titre/texte ci-dessous via les props ou passez-les depuis content/home.ts */}
         <h2
           className="mb-2 text-3xl font-semibold text-center sm:text-left"
@@ -76,9 +73,28 @@ export function ContactForm({
         >
           {title}
         </h2>
-        <p className="mb-6 text-sm text-muted-foreground text-center sm:text-left">{description}</p>
+        <p className="mb-6 text-sm text-muted-foreground text-center sm:text-left">
+          {description}
+        </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 sm:grid-cols-2">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid gap-4 sm:grid-cols-2"
+        >
+          <div className="sm:col-span-1">
+            <label className="mb-1 block text-sm font-medium">Prénom</label>
+            <input
+              {...register("firstName")}
+              type="text"
+              placeholder="Votre prénom"
+              className="w-full rounded-md border bg-background px-3 py-2 outline-none focus:ring-2"
+            />
+            {errors.firstName && (
+              <p className="mt-1 text-xs text-red-600">
+                {errors.firstName.message}
+              </p>
+            )}
+          </div>
           <div className="sm:col-span-1">
             <label className="mb-1 block text-sm font-medium">Nom</label>
             <input
@@ -101,16 +117,18 @@ export function ContactForm({
               className="w-full rounded-md border bg-background px-3 py-2 outline-none focus:ring-2"
             />
             {errors.email && (
-              <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>
+              <p className="mt-1 text-xs text-red-600">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           <div className="sm:col-span-1">
-            <label className="mb-1 block text-sm font-medium">Téléphone (optionnel)</label>
+            <label className="mb-1 block text-sm font-medium">Téléphone</label>
             <input
               {...register("phone")}
               type="tel"
-              placeholder="06 12 34 56 78"
+              placeholder="Ex: +33 6 12 34 56 78"
               className="w-full rounded-md border bg-background px-3 py-2 outline-none focus:ring-2"
             />
           </div>
@@ -124,7 +142,9 @@ export function ContactForm({
               className="w-full rounded-md border bg-background px-3 py-2 outline-none focus:ring-2"
             />
             {errors.subject && (
-              <p className="mt-1 text-xs text-red-600">{errors.subject.message}</p>
+              <p className="mt-1 text-xs text-red-600">
+                {errors.subject.message}
+              </p>
             )}
           </div>
 
@@ -137,7 +157,9 @@ export function ContactForm({
               className="w-full rounded-md border bg-background px-3 py-2 outline-none focus:ring-2"
             />
             {errors.message && (
-              <p className="mt-1 text-xs text-red-600">{errors.message.message}</p>
+              <p className="mt-1 text-xs text-red-600">
+                {errors.message.message}
+              </p>
             )}
           </div>
 
@@ -153,7 +175,9 @@ export function ContactForm({
               <span className="text-sm text-green-600">Message envoyé ✅</span>
             )}
             {status === "error" && (
-              <span className="text-sm text-red-600">Une erreur est survenue</span>
+              <span className="text-sm text-red-600">
+                Une erreur est survenue
+              </span>
             )}
           </div>
         </form>
@@ -167,5 +191,5 @@ export function ContactForm({
         */}
       </div>
     </section>
-  )
+  );
 }

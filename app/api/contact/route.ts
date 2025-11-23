@@ -3,6 +3,7 @@ import { z } from "zod"
 
 // Schéma de validation côté serveur
 const schema = z.object({
+  firstName: z.string().min(2).optional(),
   name: z.string().min(2),
   email: z.string().email(),
   phone: z.string().optional(),
@@ -15,6 +16,31 @@ async function dynImport(mod: string): Promise<any> {
   // eslint-disable-next-line no-new-func
   const fn = new Function("m", "return import(m)") as (m: string) => Promise<any>
   return fn(mod)
+}
+
+// Normalise un numéro de téléphone vers un format proche E.164 pour Brevo
+// - Supprime espaces/parenthèses/traits/points
+// - Convertit les préfixes 00 en +
+// - Si numéro FR probable (10 chiffres commençant par 0), convertit en +33...
+// - Si invalide/ambigu, retourne null pour éviter une erreur API
+function normalizePhone(phone: string): string | null {
+  let p = phone.trim()
+  if (!p) return null
+  // enlever séparateurs communs
+  p = p.replace(/[\s\-.()]/g, "")
+  if (p.startsWith("00")) p = "+" + p.slice(2)
+  if (p.startsWith("+")) {
+    const digits = p.slice(1).replace(/\D/g, "")
+    if (digits.length >= 8 && digits.length <= 15) return "+" + digits
+    return null
+  }
+  const digits = p.replace(/\D/g, "")
+  if (digits.length === 10 && digits.startsWith("0")) {
+    // heuristique France
+    return "+33" + digits.slice(1)
+  }
+  // numéro sans indicatif pays: on évite d'envoyer pour ne pas provoquer une 400
+  return null
 }
 
 export async function POST(req: Request) {
@@ -53,16 +79,28 @@ export async function POST(req: Request) {
           { status: 501 }
         )
       }
+      let contactStored = false
       try {
         // Mapping des attributs Brevo configurable via .env
-        const ATTR_NAME = process.env.BREVO_ATTR_NAME || "FIRSTNAME"
+        // Priorité: si ATTR_FIRSTNAME/LASTNAME définis, on les utilise. Sinon on retombe sur ATTR_NAME (compatibilité)
+        const ATTR_FIRSTNAME = process.env.BREVO_ATTR_FIRSTNAME || "FIRSTNAME"
+        const ATTR_LASTNAME = process.env.BREVO_ATTR_LASTNAME || "LASTNAME"
+        const ATTR_NAME = process.env.BREVO_ATTR_NAME // ancien fallback vers un seul champ
         const ATTR_PHONE = process.env.BREVO_ATTR_PHONE || "SMS"
         const ATTR_SUBJECT = process.env.BREVO_ATTR_SUBJECT || "SUBJECT"
         const ATTR_MESSAGE = process.env.BREVO_ATTR_MESSAGE || "MESSAGE"
 
         const attributes: Record<string, string> = {}
-        attributes[ATTR_NAME] = data.name
-        if (data.phone) attributes[ATTR_PHONE] = data.phone
+        if (ATTR_NAME) {
+          attributes[ATTR_NAME] = data.name
+        } else {
+          attributes[ATTR_FIRSTNAME] = data.firstName ?? ""
+          attributes[ATTR_LASTNAME] = data.name
+        }
+        if (data.phone) {
+          const normalized = normalizePhone(data.phone)
+          if (normalized) attributes[ATTR_PHONE] = normalized
+        }
         attributes[ATTR_SUBJECT] = data.subject
         attributes[ATTR_MESSAGE] = data.message
 
@@ -74,7 +112,7 @@ export async function POST(req: Request) {
         if (!Number.isNaN(listId) && listId > 0) {
           payload.listIds = [listId]
         }
-        const r = await fetch("https://api.brevo.com/v3/contacts", {
+        let r = await fetch("https://api.brevo.com/v3/contacts", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -85,14 +123,114 @@ export async function POST(req: Request) {
         })
         if (!r.ok) {
           const body = await r.text().catch(() => "")
-          throw new Error(`BREVO_ERROR ${r.status}: ${body}`)
+          // Si l'erreur vient d'un numéro invalide, on retente sans l'attribut téléphone
+          const isInvalidPhone = /Invalid phone number/i.test(body)
+          if (isInvalidPhone && payload.attributes && ATTR_PHONE && payload.attributes[ATTR_PHONE]) {
+            try {
+              const retryPayload = { ...payload, attributes: { ...payload.attributes } }
+              delete retryPayload.attributes[ATTR_PHONE]
+              r = await fetch("https://api.brevo.com/v3/contacts", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                  "api-key": apiKey,
+                },
+                body: JSON.stringify(retryPayload),
+              })
+            } catch {}
+          }
+          if (!r.ok) {
+            // Dernier fallback: payload minimal (email seul)
+            const minimal: any = { email: data.email, updateEnabled: true }
+            if (!Number.isNaN(listId) && listId > 0) minimal.listIds = [listId]
+            r = await fetch("https://api.brevo.com/v3/contacts", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "api-key": apiKey,
+              },
+              body: JSON.stringify(minimal),
+            })
+            if (!r.ok) {
+              const body2 = await r.text().catch(() => body)
+              console.error("BREVO_CONTACT_STORE_FAILED", body2)
+            }
+          }
+        }
+        if (r.ok) contactStored = true
+
+        // Optionnel: si CONTACT_FROM_EMAIL et CONTACT_TO_EMAIL sont définis, envoyer aussi un email transactionnel via Brevo
+        if (from && to) {
+          const parseEmail = (s: string) => {
+            const m = s.match(/<([^>]+)>/) // extrait l'email entre <>
+            return (m && m[1]) || s
+          }
+          const parseName = (s: string) => {
+            const m = s.match(/^\s*([^<]+)</)
+            return (m && m[1].trim()) || undefined
+          }
+          const fromEmail = parseEmail(from)
+          const fromName = parseName(from)
+          const toEmail = parseEmail(to)
+
+          const htmlContent = `
+            <table width="100%" cellpadding="0" cellspacing="0" style="font-family: Arial, sans-serif; background:#f7f7f8; padding:24px;">
+              <tr>
+                <td align="center">
+                  <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px; background:#ffffff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
+                    <tr>
+                      <td style="padding:20px 24px; background:#0f172a; color:#fff; font-size:18px; font-weight:600;">
+                        Nouveau message du site – ${data.subject}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:20px 24px; color:#111827; font-size:14px; line-height:1.6;">
+                        <p style="margin:0 0 12px 0;"><strong>Prénom:</strong> ${data.firstName ?? "-"}</p>
+                        <p style="margin:0 0 12px 0;"><strong>Nom:</strong> ${data.name}</p>
+                        <p style="margin:0 0 12px 0;"><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+                        <p style="margin:0 0 12px 0;"><strong>Téléphone:</strong> ${data.phone ?? "-"}</p>
+                        <hr style="border:none; border-top:1px solid #e5e7eb; margin:16px 0;"/>
+                        <p style="margin:0 0 6px 0; font-weight:600;">Message:</p>
+                        <div style="white-space:pre-wrap; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:12px; color:#111827;">${data.message}</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:12px 24px; color:#6b7280; font-size:12px; border-top:1px solid #e5e7eb;">
+                        Cet email a été envoyé automatiquement depuis le formulaire de contact.
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>`
+
+          const mailPayload: any = {
+            sender: fromName ? { email: fromEmail, name: fromName } : { email: fromEmail },
+            to: [{ email: toEmail }],
+            subject: `Nouveau message: ${data.subject}`,
+            textContent: `Prénom: ${data.firstName ?? "-"}\nNom: ${data.name}\nEmail: ${data.email}\nTel: ${data.phone ?? "-"}\n\n${data.message}`,
+            htmlContent,
+            replyTo: data.email,
+          }
+          const er = await fetch("https://api.brevo.com/v3/smtp/email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "api-key": apiKey,
+            },
+            body: JSON.stringify(mailPayload),
+          })
+          if (!er.ok) {
+            const body = await er.text().catch(() => "")
+            throw new Error(`BREVO_SEND_ERROR ${er.status}: ${body}`)
+          }
         }
       } catch (e: any) {
         console.error("BREVO_CONTACT_ERROR", e)
-        return NextResponse.json(
-          { ok: false, reason: "Erreur lors de l'enregistrement Brevo" },
-          { status: 500 }
-        )
+        // On n'arrête pas le flux: on continue l'envoi email si configuré
       }
     } else if (provider === "resend") {
       const apiKey = process.env.RESEND_API_KEY

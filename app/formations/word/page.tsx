@@ -33,7 +33,7 @@ export default function WordIntermediairePage() {
           <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-3 md:gap-12">
             {/* Colonne informations clés */}
             <aside className="space-y-6 md:col-span-1">
-              <div className="rounded-lg border border-[color:var(--border)] p-5">
+              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
                   Informations clés
                 </h2>
@@ -56,7 +56,7 @@ export default function WordIntermediairePage() {
                 </ul>
               </div>
 
-              <div className="rounded-lg border border-[color:var(--border)] p-5">
+              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
                   Modalités d’accès
                 </h2>
@@ -66,7 +66,7 @@ export default function WordIntermediairePage() {
                 </ul>
               </div>
 
-              <div className="rounded-lg border border-[color:var(--border)] p-5">
+              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
                   Accessibilité
                 </h2>
@@ -76,7 +76,7 @@ export default function WordIntermediairePage() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-[color:var(--border)] p-5">
+              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
                   Formateur
                 </h2>

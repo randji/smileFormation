@@ -3,8 +3,9 @@ import type { TrainingCardProps } from "@/components/training-card";
 export const hero = {
   title: "Smile Formation",
   description: [
-    "Centre de formation professionnelle spécialisé en langues (français, anglais, espagnol...), bureautique (Word, Excel, PowerPoint) et intelligence artificielle.",
-    "Notre pédagogie est orientée résultats: parcours sur-mesure, exercices pratiques, et accompagnement individualisé. La formation qui vous donne le sourire.",
+    "Centre de formation professionnelle spécialisé en bureautique.",
+    "Notre pédagogie est orientée résultats: parcours sur-mesure, exercices pratiques, et accompagnement individualisé.","La formation qui vous donne le sourire.", "Locaux accessibles PSH/PMR.",
+    
   ],
   certificationImage: "/Smile.jpg",
   // Active le smiley animé GSAP à la place de l'image
@@ -93,7 +94,7 @@ export const contactSection = {
   title: "Besoin d'une formation ?",
   // Court texte d’introduction sous le titre
   description:
-    "Parlez-nous de votre projet (langues, bureautique, IA) et nous revenons vers vous sous 24h.",
+    "Parlez-nous de votre projet et nous revenons vers vous sous 24h.",
   // Libellé du bouton d’envoi
   submitLabel: "Envoyer ma demande",
 };

@@ -19,8 +19,8 @@ export function SiteFooter() {
             />
           </div>
 
-          {/* Colonne droite: coordonnées (cachées sur mobile) */}
-          <div className="hidden md:flex w-full justify-center">
+          {/* Colonne droite: coordonnées (toujours visibles, y compris mobile) */}
+          <div className="flex w-full justify-center">
             <div className="w-full text-center leading-relaxed text-base md:text-lg lg:text-xl">
               <p className="font-medium">Smile Formation</p>
               <p>6 rue d'armaille 75017 Paris</p>
