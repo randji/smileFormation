@@ -45,20 +45,33 @@ export function ContactForm({
   } = useForm<ContactFormValues>({ resolver: zodResolver(contactSchema) });
 
   const [status, setStatus] = React.useState<"idle" | "ok" | "error">("idle");
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const onSubmit = async (values: ContactFormValues) => {
     setStatus("idle");
+    setErrorMessage(null);
     try {
       const res = await fetch(action, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      if (!res.ok) throw new Error("Request failed");
+      // Essayez de lire la raison renvoy�e par l'API pour avoir un diagnostic pr�cis en prod.
+      const payload = await res.json().catch(() => null);
+      const reason =
+        typeof payload === "object" && payload
+          ? (payload as any).reason || (payload as any).message
+          : null;
+      if (!res.ok) {
+        throw new Error(reason || "Request failed");
+      }
       setStatus("ok");
       onSuccess?.(values);
       reset();
     } catch (e) {
+      if (e instanceof Error) {
+        setErrorMessage(e.message);
+      }
       setStatus("error");
     }
   };
@@ -176,7 +189,7 @@ export function ContactForm({
             )}
             {status === "error" && (
               <span className="text-sm text-red-600">
-                Une erreur est survenue
+                Une erreur est survenue{errorMessage ? ` : ${errorMessage}` : ""}
               </span>
             )}
           </div>
