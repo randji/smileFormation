@@ -189,7 +189,7 @@ export function ContactForm({
             )}
             {status === "error" && (
               <span className="text-sm text-red-600">
-                Une erreur est survenue{errorMessage ? ` : ${errorMessage}` : ""}
+                Une erreur est survenue, veuillez réessayer.
               </span>
             )}
           </div>

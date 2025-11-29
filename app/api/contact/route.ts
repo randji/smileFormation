@@ -80,6 +80,7 @@ export async function POST(req: Request) {
         )
       }
       let contactStored = false
+      let brevoError: string | null = null
       try {
         // Mapping des attributs Brevo configurable via .env
         // Priorité: si ATTR_FIRSTNAME/LASTNAME définis, on les utilise. Sinon on retombe sur ATTR_NAME (compatibilité)
@@ -123,9 +124,15 @@ export async function POST(req: Request) {
         })
         if (!r.ok) {
           const body = await r.text().catch(() => "")
-          // Si l'erreur vient d'un numéro invalide, on retente sans l'attribut téléphone
+          // Si l'erreur vient du téléphone (invalide ou déjà utilisé), on retente sans l'attribut téléphone
           const isInvalidPhone = /Invalid phone number/i.test(body)
-          if (isInvalidPhone && payload.attributes && ATTR_PHONE && payload.attributes[ATTR_PHONE]) {
+          const isDuplicatePhone = /duplicate_parameter.*SMS|SMS is already associated/i.test(body)
+          if (
+            (isInvalidPhone || isDuplicatePhone) &&
+            payload.attributes &&
+            ATTR_PHONE &&
+            payload.attributes[ATTR_PHONE]
+          ) {
             try {
               const retryPayload = { ...payload, attributes: { ...payload.attributes } }
               delete retryPayload.attributes[ATTR_PHONE]
@@ -155,6 +162,7 @@ export async function POST(req: Request) {
             })
             if (!r.ok) {
               const body2 = await r.text().catch(() => body)
+              brevoError = `Brevo contact failed (${r.status})${body2 ? `: ${body2}` : ""}`
               console.error("BREVO_CONTACT_STORE_FAILED", body2)
             }
           }
@@ -212,7 +220,11 @@ export async function POST(req: Request) {
             subject: `Nouveau message: ${data.subject}`,
             textContent: `Prénom: ${data.firstName ?? "-"}\nNom: ${data.name}\nEmail: ${data.email}\nTel: ${data.phone ?? "-"}\n\n${data.message}`,
             htmlContent,
-            replyTo: data.email,
+            // Brevo SMTP API attend un objet { email, name } pour replyTo
+            replyTo: {
+              email: data.email,
+              name: [data.firstName, data.name].filter(Boolean).join(" ").trim() || undefined,
+            },
           }
           const er = await fetch("https://api.brevo.com/v3/smtp/email", {
             method: "POST",
@@ -228,9 +240,22 @@ export async function POST(req: Request) {
             throw new Error(`BREVO_SEND_ERROR ${er.status}: ${body}`)
           }
         }
+        if (brevoError) {
+          return NextResponse.json(
+            { ok: false, reason: brevoError },
+            { status: 502 }
+          )
+        }
       } catch (e: any) {
         console.error("BREVO_CONTACT_ERROR", e)
-        // On n'arrête pas le flux: on continue l'envoi email si configuré
+        const reason =
+          (typeof e?.message === "string" && e.message) ||
+          (typeof e === "string" && e) ||
+          "Erreur Brevo inconnue"
+        return NextResponse.json(
+          { ok: false, reason },
+          { status: 502 }
+        )
       }
     } else if (provider === "resend") {
       const apiKey = process.env.RESEND_API_KEY
