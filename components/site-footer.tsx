@@ -36,7 +36,7 @@ export function SiteFooter() {
                   contact@smileformation.fr
                 </a>
               </p>
-              <p>SIREN: à compléter</p>
+              <p>SIREN: 990 859 654</p>
             </div>
           </div>
         </div>

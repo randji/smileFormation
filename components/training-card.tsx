@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Settings, Clock, Mail } from "lucide-react"
+import { Settings, Clock, Mail, Wallet } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -38,6 +38,10 @@ export function TrainingCard({ title, category, imageUrl, type, duration, contac
             <div className="flex items-center gap-3 text-sm">
               <Clock className="h-4 w-4" />
               <span className="uppercase tracking-wide">{duration}</span>
+            </div>
+            <div className="flex items-center gap-3 text-sm">
+              <Wallet className="h-4 w-4" />
+              <span className="uppercase tracking-wide">Financement : France Travail</span>
             </div>
             <div className="flex items-center gap-3 text-sm">
               <Mail className="h-4 w-4" />
