@@ -32,7 +32,7 @@ export function SiteHeader() {
             href="/formations/word"
             className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
           >
-            Formations
+            Formation
           </Link>
           {/* <Link
             href="#"
