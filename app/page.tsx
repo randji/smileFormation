@@ -6,6 +6,7 @@ import { PresenteeismSection } from "@/components/presenteeism-section"
 import { LastUpdatedSection } from "@/components/last-updated-section"
 import { hero, tabs, trainings, contactSection, trainingLinks } from "@/content/home"
 import { ContactForm } from "@/components/contact-form"
+import { QualiopiBadge } from "@/components/qualiopi-badge"
 
 export default function FormationsPage() {
   return (
@@ -27,6 +28,8 @@ export default function FormationsPage() {
           blinkInterval={hero.logoBlinkInterval}
           startDelay={hero.logoStartDelay}
         />
+
+        <QualiopiBadge />
 
         <TrainingsSection
           tabs={tabs}

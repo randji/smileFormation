@@ -1,224 +1,300 @@
+import { type ReactNode } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ContactForm } from "@/components/contact-form"
+import {
+  Award,
+  BookOpen,
+  CheckCircle2,
+  ClipboardCheck,
+  Clock,
+  FileText,
+  Layers,
+  Settings,
+  Sparkles,
+  Users,
+} from "lucide-react"
 
 export const metadata = {
-  title: "Formation Word – Niveau intermédiaire | Smile Formation",
+  title: "Formation Word - Niveau intermédiaire | Smile Formation",
   description:
-    "Programme détaillé de la formation Microsoft Word niveau intermédiaire : objectifs, public, durée, méthodes, évaluation, contenu des modules, accessibilité, formateur et tarifs.",
+    "Programme détaillé de la formation Microsoft Word niveau intermédiaire : objectifs, modules avancés (styles, publipostage, collaboration), méthodes pédagogiques et atelier final.",
 }
+
+const modules = [
+  {
+    title: "Module 1 - Rappels essentiels",
+    duration: "30 min",
+    points: [
+      "Mise en forme texte et paragraphes",
+      "Raccourcis clavier utiles",
+      "Sauvegarde et gestion des versions",
+    ],
+  },
+  {
+    title: "Module 2 - Structurer un document",
+    duration: "1h",
+    points: [
+      "Styles titres/corps pour harmoniser",
+      "Création automatique de sommaire",
+      "Sections pour différencier en-têtes/pieds de page",
+    ],
+  },
+  {
+    title: "Module 3 - Mise en page avancée",
+    duration: "1h",
+    points: ["Marges, orientation, colonnes", "Numérotation personnalisée des pages", "Sauts de page et de section"],
+  },
+  {
+    title: "Module 4 - Objets dans Word",
+    duration: "1h",
+    points: [
+      "Images : insertion, habillage, positionnement",
+      "Tableaux : styles, mise en forme, mises en page rapides",
+      "Formes, SmartArt, zones de texte",
+    ],
+  },
+  {
+    title: "Module 5 - Publipostage",
+    duration: "1h",
+    points: ["Lettres types", "Connexion à une base Excel", "Fusion pour étiquettes ou enveloppes"],
+  },
+  {
+    title: "Module 6 - Collaboration et révision",
+    duration: "1h",
+    points: ["Suivi des modifications", "Commentaires ciblés", "Comparaison de versions"],
+  },
+]
+
+const supports = [
+  {
+    title: "Supports fournis",
+    icon: FileText,
+    items: ["Fiches mémo (styles, publipostage, raccourcis)", "Exercices corrigés", "Modèles prêts à l'emploi"],
+  },
+  {
+    title: "Méthodes pédagogiques",
+    icon: Users,
+    items: ["Alternance démonstration / exercices", "Mise en pratique immédiate", "Accompagnement individuel"],
+  },
+  {
+    title: "Évaluation des acquis",
+    icon: ClipboardCheck,
+    items: ["Quiz final", "Réalisation d'un document structuré", "Auto-évaluation guidée"],
+  },
+]
 
 export default function WordIntermediairePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-[color:var(--smile-light)]/40 via-white to-white">
       <SiteHeader />
 
       <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden bg-[color:var(--smile-navy)] text-white">
-          <div className="container mx-auto px-4 py-14 md:py-20">
-            <p className="mb-2 text-xs font-medium uppercase tracking-wider text-white/80">Bureautique</p>
-            <h1 className="text-3xl font-semibold leading-tight md:text-4xl">
-              Microsoft Word – Niveau intermédiaire
-            </h1>
-            <p className="mt-4 max-w-3xl text-white/90">
-              Maîtrisez les fonctionnalités essentielles et avancées pour produire des documents
-              professionnels, structurés et cohérents.
-            </p>
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -left-10 top-10 h-48 w-48 rounded-full bg-[color:var(--smile-yellow)]/20 blur-3xl animate-pulse" />
+            <div className="absolute -right-10 bottom-10 h-56 w-56 rounded-full bg-[color:var(--smile-navy)]/15 blur-3xl animate-pulse" />
+          </div>
+
+          <div className="container relative mx-auto grid gap-10 px-4 py-14 md:grid-cols-[1.2fr_0.8fr] md:py-20">
+            <div className="space-y-6 fade-in-up">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--smile-navy)]/80">
+                Bureautique
+              </p>
+              <h1 className="text-3xl font-semibold leading-tight text-[color:var(--smile-navy)] md:text-4xl">
+                Microsoft Word - Niveau intermédiaire
+              </h1>
+              <p className="text-lg text-muted-foreground md:text-xl">
+                Maîtrisez les styles, la mise en page avancée et le publipostage pour produire des documents professionnels
+                structurés et cohérents.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Badge icon={Clock} label="1 à 2 jours (7 à 14h)" />
+                <Badge icon={Award} label="Niveau : intermédiaire" />
+                <Badge icon={Settings} label="Styles, sections, publipostage" />
+              </div>
+            </div>
+
+            <div className="fade-in-up fade-delay-100">
+              <div className="rounded-3xl border border-[color:var(--border)] bg-white/70 p-6 shadow-lg backdrop-blur">
+                <div className="flex items-center gap-3">
+                  <Layers className="h-5 w-5 text-[color:var(--smile-navy)]" />
+                  <h2 className="text-lg font-semibold text-[color:var(--smile-navy)]">Objectifs pédagogiques</h2>
+                </div>
+                <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                    Construire des documents structurés avec styles, sections et sommaires automatiques.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                    Mettre en page de façon avancée : colonnes, numérotation personnalisée, en-têtes/pieds différenciés.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                    Insérer et maîtriser images, tableaux, SmartArt et zones de texte.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                    Réaliser un publipostage (lettres, étiquettes) connecté à une base de données.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                    Collaborer efficacement : suivi des modifications, commentaires, comparaison de versions.
+                  </li>
+                </ul>
+                <div className="mt-6 rounded-2xl bg-[color:var(--smile-light)]/70 p-4 text-sm text-[color:var(--smile-navy)]">
+                  <p className="font-semibold">Durée modulable</p>
+                  <p>1 à 2 jours selon la pratique souhaitée (7h ou 14h), ajustable aux objectifs métiers.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Contenu principal */}
-        <section className="container mx-auto px-4 py-10 md:py-14">
-          <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-3 md:gap-12">
-            {/* Colonne informations clés */}
-            <aside className="space-y-6 md:col-span-1">
-              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
-                  Informations clés
-                </h2>
-                <ul className="mt-3 space-y-2 text-sm">
-                  <li>
-                    <span className="font-medium">Intitulé&nbsp;:</span> Microsoft Word niveau intermédiaire
-                  </li>
-                  <li>
-                    <span className="font-medium">Durée&nbsp;:</span> 7 heures (deux demi‑journées)
-                  </li>
-                  <li>
-                    <span className="font-medium">Type&nbsp;:</span> Présentiel, avec supports PDF + fichiers d’exercices
-                  </li>
-                  <li>
-                    <span className="font-medium">Tarif&nbsp;:</span> 350€ HT (420€ TTC)
-                  </li>
-                  <li>
-                    <span className="font-medium">Financement&nbsp;:</span> CPF, OPCO, Pôle Emploi, etc.
-                  </li>
-                </ul>
-              </div>
+        <section className="container mx-auto px-4 pb-14 md:pb-20">
+          <div className="grid gap-8 md:grid-cols-3">
+            <Card title="Public visé" icon={Users} delay={0}>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Utilisateurs Word déjà à l'aise sur les bases, voulant structurer et automatiser.</li>
+                <li>Salariés, indépendants, demandeurs d'emploi, reconversion.</li>
+              </ul>
+            </Card>
 
-              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
-                  Modalités d’accès
-                </h2>
-                <ul className="mt-3 space-y-2 text-sm">
-                  <li>Inscription jusqu’à 48h avant le début de la formation</li>
-                  <li>Entretien de positionnement préalable si nécessaire</li>
-                </ul>
-              </div>
+            <Card title="Prérequis" icon={ClipboardCheck} delay={50}>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Mise en forme simple maîtrisée (gras, listes, enregistrer un document).</li>
+                <li>Connaissances de base de la bureautique.</li>
+              </ul>
+            </Card>
 
-              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
-                  Accessibilité
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  Locaux accessibles PSH/PMR selon modalités des sites (ERP loué ou chez le
-                  commanditaire). Contactez‑nous en amont pour organiser les adaptations nécessaires.
-                </p>
-              </div>
+            <Card title="Livrables" icon={Award} delay={100}>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Documents modèles structurés (styles, sommaire, sections).</li>
+                <li>Publipostage fonctionnel prêt à réutiliser.</li>
+              </ul>
+            </Card>
+          </div>
 
-              <div className="rounded-lg border border-[color:var(--border)] p-5 shadow-lg">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--smile-navy)]">
-                  Formateur
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed">
-                  Monsieur SAYADA Yoni, formateur Word et Excel depuis 2023.
-                </p>
-              </div>
-            </aside>
+          <div className="mt-12 space-y-8">
+            <div className="flex items-center gap-3 fade-in-up">
+              <BookOpen className="h-5 w-5 text-[color:var(--smile-navy)]" />
+              <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Programme détaillé</h2>
+            </div>
 
-            {/* Colonne contenu détaillé */}
-            <div className="md:col-span-2 space-y-10">
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">
-                  Objectifs pédagogiques opérationnels
-                </h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5">
-                  <li>Maîtriser les fonctionnalités intermédiaires de Word pour produire des documents professionnels.</li>
-                  <li>Gérer la mise en page avancée (styles, modèles, sections, en‑têtes/pieds de page personnalisés).</li>
-                  <li>Utiliser les styles pour automatiser la mise en forme et certaines tâches (sommaire, publipostage, modèles).</li>
-                  <li>Insérer, manipuler et gérer des objets (images, tableaux, graphiques, formes, SmartArt).</li>
-                  <li>Créer un publipostage simple (lettres, étiquettes).</li>
-                  <li>Utiliser les outils de correction et de collaboration.</li>
-                  <li>Créer des documents professionnels avec une mise en forme avancée.</li>
-                  <li>Améliorer la présentation et la cohérence des documents longs.</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Public visé</h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5">
-                  <li>Toute personne amenée à rédiger, mettre en forme ou corriger des documents professionnels.</li>
-                  <li>Indépendants, salariés, demandeurs d’emploi, retraités.</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Prérequis</h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5">
-                  <li>Connaissances de base de Microsoft Word (niveau débutant maîtrisé).</li>
-                  <li>Savoir créer et enregistrer un document, saisir du texte, appliquer une mise en forme simple.</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Durée</h2>
-                <p className="mt-4">Durée totale&nbsp;: 7 heures (deux demi‑journées).</p>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Méthodes mobilisées</h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5">
-                  <li>Formation en présentiel.</li>
-                  <li>Support pédagogique fourni (PDF + fichiers d’exercices).</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Modalités d’évaluation</h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5">
-                  <li>Positionnement initial (QCM ou test de niveau).</li>
-                  <li>Évaluations formatives pendant les exercices pratiques.</li>
-                  <li>Évaluation finale (mise en situation réelle : création d’un document structuré + QCM).</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Contenu de la formation</h2>
-                <div className="mt-4 space-y-6">
-                  <div>
-                    <h3 className="font-medium text-[color:var(--smile-navy)]">Module 1 – Rappels essentiels</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Mise en forme de texte et paragraphes</li>
-                      <li>Utilisation des raccourcis clavier</li>
-                      <li>Sauvegarde et gestion des versions</li>
-                    </ul>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {modules.map((module, index) => (
+                <div
+                  key={module.title}
+                  className="rounded-2xl border border-[color:var(--border)] bg-white/80 p-5 shadow-sm fade-in-up"
+                  style={{ animationDelay: `${index * 70}ms` }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--smile-navy)] text-white">
+                        {index + 1}
+                      </div>
+                      <h3 className="text-base font-semibold text-[color:var(--smile-navy)]">{module.title}</h3>
+                    </div>
+                    <span className="flex items-center gap-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      {module.duration}
+                    </span>
                   </div>
-                  <div>
-                    <h3 className="font-medium text-[color:var(--smile-navy)]">Module 2 – Structurer un document</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Utilisation des styles (titre, corps de texte, etc.)</li>
-                      <li>Création automatique de sommaire</li>
-                      <li>Utilisation des sections (sauts de section, en‑têtes/pieds de page différenciés)</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-[color:var(--smile-navy)]">Module 3 – Mise en page avancée</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Marges, orientation, colonnes</li>
-                      <li>Numérotation des pages personnalisée</li>
-                      <li>Insertion de sauts de page/sauts de section</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-[color:var(--smile-navy)]">Module 4 – Objets dans Word</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Insertion et mise en forme d’images</li>
-                      <li>Tableaux (création, mise en page, styles)</li>
-                      <li>Formes, graphiques SmartArt</li>
-                      <li>Zones de texte</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-[color:var(--smile-navy)]">Module 5 – Publipostage</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Création de lettres types</li>
-                      <li>Liaison à une base de données Excel</li>
-                      <li>Fusion pour étiquettes ou enveloppes</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-[color:var(--smile-navy)]">Module 6 – Outils collaboratifs et révision</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5">
-                      <li>Suivi des modifications</li>
-                      <li>Commentaires</li>
-                      <li>Comparaison de versions</li>
-                    </ul>
-                  </div>
+                  <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                    {module.points.map((point) => (
+                      <li key={point} className="flex items-start gap-2">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </section>
+              ))}
+            </div>
+          </div>
 
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Fin de formation</h2>
-                <p className="mt-4">Certificat de réalisation.</p>
-              </section>
+          <div className="mt-14 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="rounded-3xl border border-[color:var(--border)] bg-gradient-to-br from-white to-[color:var(--smile-light)]/60 p-6 shadow-md fade-in-up">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-[color:var(--smile-navy)]" />
+                <h2 className="text-lg font-semibold text-[color:var(--smile-navy)]">Atelier pratique final</h2>
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Production d'un document complet : styles appliqués, sommaire automatique, sections différenciées,
+                objets insérés, publipostage (lettre ou étiquette) et export PDF.
+              </p>
+            </div>
 
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">Coordonnées</h2>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  SMILE FORMATION, 6 Rue d’Armaille, 75017, SIRET 990&nbsp;859&nbsp;654&nbsp;00016, RCS 990&nbsp;859&nbsp;654 •
-                  smile.formation526@gmail.com
-                </p>
-              </section>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {supports.map((support, index) => (
+                <Card key={support.title} title={support.title} icon={support.icon} delay={index * 50}>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {support.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              <section>
-                <h2 className="text-xl font-semibold text-[color:var(--smile-navy)]">S’inscrire ou obtenir un devis</h2>
-                <p className="mt-4 text-muted-foreground">
-                  Dites‑nous vos besoins (dates, objectifs, niveau) et nous revenons vers vous sous 24h.
-                </p>
-                <div className="mt-6">
-                  <ContactForm title="Besoin d'informations ?" description="Contactez‑nous pour cette formation Word." submitLabel="Envoyer" />
+        <section className="bg-[color:var(--smile-navy)] text-white">
+          <div className="container mx-auto grid gap-8 px-4 py-12 md:grid-cols-2 md:items-center">
+            <div className="space-y-3 fade-in-up">
+              <p className="text-sm uppercase tracking-[0.2em] text-white/70">Modalités pratiques</p>
+              <h2 className="text-2xl font-semibold">Accessibilité & évaluations</h2>
+              <ul className="space-y-2 text-sm text-white/90">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                  Inscription possible jusqu'à 48h avant le démarrage, entretien de positionnement si besoin.
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                  Locaux accessibles PSH/PMR selon les sites ; adaptations sur demande.
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--smile-yellow)]" />
+                  Quiz final + réalisation d'un document structuré pour valider les acquis.
+                </li>
+              </ul>
+            </div>
+            <div className="fade-in-up fade-delay-50">
+              <div className="rounded-3xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur">
+                <div className="flex items-center gap-3">
+                  <Award className="h-5 w-5 text-[color:var(--smile-yellow)]" />
+                  <h3 className="text-lg font-semibold">Formateur</h3>
                 </div>
-              </section>
+                <p className="mt-3 text-sm text-white/90">
+                  Monsieur SAYADA Yoni, formateur Word et Excel depuis 2023. Un accompagnement pas-à-pas pour intégrer les
+                  bonnes pratiques avancées et gagner en productivité.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4 py-12 md:py-16">
+          <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+            <div className="space-y-3 fade-in-up">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--smile-navy)]/80">
+                Dites-nous vos besoins
+              </p>
+              <h2 className="text-2xl font-semibold text-[color:var(--smile-navy)]">Obtenir un devis ou réserver</h2>
+              <p className="text-sm text-muted-foreground">
+                Décrivez vos dates, objectifs et contexte. Nous revenons vers vous sous 24h avec une proposition adaptée.
+              </p>
+            </div>
+            <div className="fade-in-up fade-delay-50">
+              <ContactForm
+                title="Je veux suivre cette formation Word intermédiaire"
+                description="Précisez vos documents cibles et les fonctionnalités que vous souhaitez maîtriser."
+                submitLabel="Envoyer ma demande"
+              />
             </div>
           </div>
         </section>
@@ -229,3 +305,35 @@ export default function WordIntermediairePage() {
   )
 }
 
+function Badge({ icon: Icon, label }: { icon: typeof Clock; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-white/70 px-3 py-2 text-xs font-medium text-[color:var(--smile-navy)] shadow-sm">
+      <Icon className="h-4 w-4" />
+      {label}
+    </span>
+  )
+}
+
+function Card({
+  title,
+  icon: Icon,
+  children,
+  delay = 0,
+}: {
+  title: string
+  icon: typeof Users
+  children: ReactNode
+  delay?: number
+}) {
+  return (
+    <div className="fade-in-up" style={{ animationDelay: `${delay}ms` }}>
+      <div className="rounded-2xl border border-[color:var(--border)] bg-white/80 p-5 shadow-sm backdrop-blur">
+        <div className="mb-3 flex items-center gap-2">
+          <Icon className="h-5 w-5 text-[color:var(--smile-navy)]" />
+          <h3 className="text-base font-semibold text-[color:var(--smile-navy)]">{title}</h3>
+        </div>
+        {children}
+      </div>
+    </div>
+  )
+}

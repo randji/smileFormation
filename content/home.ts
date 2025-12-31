@@ -27,7 +27,7 @@ export const hero = {
   logoStartDelay: 0,
 };
 
-export const tabs: string[] = ["Langues", "Bureautique", "IA", "Tous"];
+export const tabs: string[] = ["Word", "Excel", "PowerPoint", "Canva"];
 
 export const trainings: TrainingCardProps[] = [
   {
@@ -56,11 +56,67 @@ export const trainings: TrainingCardProps[] = [
   },
   {
     title: "Word – niveau intermédiaire",
-    category: "Bureautique",
+    category: "Word",
     imageUrl: "/Smile.jpg",
     type: "Atelier pratique",
     duration: "1 à 2 jours",
     contactText: "Nous contacter",
+  },
+  {
+    title: "Word - niveau débutant",
+    category: "Word",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier guidé",
+    duration: "1 jour ou 2 demi-journées",
+    contactText: "Programme détaillé",
+  },
+  {
+    title: "Excel - niveau débutant",
+    category: "Excel",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier guidé",
+    duration: "1 journée (7h)",
+    contactText: "Programme détaillé",
+  },
+  {
+    title: "Excel - niveau intermédiaire",
+    category: "Excel",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier pratique",
+    duration: "1 journée",
+    contactText: "Programme détaillé",
+  },
+  {
+    title: "PowerPoint - niveau débutant",
+    category: "PowerPoint",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier guidé",
+    duration: "1 journée (7h)",
+    contactText: "Programme détaillé",
+  },
+  {
+    title: "PowerPoint - niveau intermédiaire",
+    category: "PowerPoint",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier pratique",
+    duration: "1 journée",
+    contactText: "Programme détaillé",
+  },
+  {
+    title: "Canva - niveau débutant",
+    category: "Canva",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier guidé",
+    duration: "2 jours recommandés",
+    contactText: "Programme détaillé",
+  },
+  {
+    title: "Canva - niveau avancé",
+    category: "Canva",
+    imageUrl: "/Smile.jpg",
+    type: "Atelier pratique",
+    duration: "2 à 3 jours",
+    contactText: "Programme détaillé",
   },
   // {
   //   title: "Excel – tableaux, formules et tableaux croisés",
@@ -101,5 +157,14 @@ export const contactSection = {
 
 // Liens vers les pages formations détaillées (configurable)
 export const trainingLinks: Record<string, string> = {
-  "Word - niveau interm�diaire": "/formations/word",
+  "Excel - niveau débutant": "/formations/excel-debutant",
+  "Excel - niveau intermédiaire": "/formations/excel",
+  "PowerPoint - niveau débutant": "/formations/powerpoint-debutant",
+  "PowerPoint - niveau intermédiaire": "/formations/powerpoint",
+  "Canva - niveau débutant": "/formations/canva-debutant",
+  "Canva - niveau avancé": "/formations/canva",
+  "Word – niveau intermédiaire": "/formations/word",
+  "Word - niveau intermédiaire": "/formations/word",
+  "Word – niveau débutant": "/formations/word-debutant",
+  "Word - niveau débutant": "/formations/word-debutant",
 };

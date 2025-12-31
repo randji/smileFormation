@@ -1,63 +1,78 @@
-import Link from "next/link";
-import Image from "next/image";
+import { type ReactNode } from "react"
+import Link from "next/link"
+import Image from "next/image"
 
 export function SiteHeader() {
   return (
     <header className="border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-center md:justify-between px-4">
         <Link href="/" className="flex items-center gap-3">
-          <Image
-            src="/Smile.jpg"
-            alt="SMILE FORMATION"
-            width={32}
-            height={32}
-          />
-          <span
-            className="text-2xl font-bold"
-            style={{ color: "var(--smile-navy)" }}
-          >
-            SMILE{" "}
-            <span className="text-[color:var(--smile-yellow)]">FORMATION</span>
+          <Image src="/Smile.jpg" alt="SMILE FORMATION" width={32} height={32} />
+          <span className="text-2xl font-bold" style={{ color: "var(--smile-navy)" }}>
+            SMILE <span className="text-[color:var(--smile-yellow)]">FORMATION</span>
           </span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          {/* <Link
-            href="#"
-            className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
-          >
-            Centre
-          </Link> */}
-          <Link
-            href="/formations/word"
-            className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
-          >
-            FORMATION
-          </Link>
-          {/* <Link
-            href="#"
-            className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
-          >
-            Équipe
-          </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
-          >
-            Financements
-          </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
-          >
-            Actualités
-          </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium hover:text-[color:var(--smile-navy)]"
-          >
-            Contact
-          </Link> */}
+          <Dropdown label="WORD">
+            <Link
+              href="/formations/word"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              Word intermédiaire
+            </Link>
+            <Link
+              href="/formations/word-debutant"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              Word débutant
+            </Link>
+          </Dropdown>
+
+          <Dropdown label="EXCEL">
+            <Link
+              href="/formations/excel"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              Excel intermédiaire
+            </Link>
+            <Link
+              href="/formations/excel-debutant"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              Excel débutant
+            </Link>
+          </Dropdown>
+
+          <Dropdown label="POWERPOINT">
+            <Link
+              href="/formations/powerpoint"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              PowerPoint intermédiaire
+            </Link>
+            <Link
+              href="/formations/powerpoint-debutant"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              PowerPoint débutant
+            </Link>
+          </Dropdown>
+
+          <Dropdown label="CANVA">
+            <Link
+              href="/formations/canva"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              Canva avancé
+            </Link>
+            <Link
+              href="/formations/canva-debutant"
+              className="block px-4 py-2 text-sm font-medium text-[color:var(--smile-navy)] hover:bg-[color:var(--smile-light)]"
+            >
+              Canva débutant
+            </Link>
+          </Dropdown>
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
@@ -67,18 +82,24 @@ export function SiteHeader() {
           >
             Contact
           </Link>
-          {/* <Link
-            href="#"
-            className="flex h-8 w-8 items-center justify-center rounded-full border hover:bg-accent"
-          >
-            <span className="sr-only">LinkedIn</span>
-            <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-            </svg>
-          </Link> */}
-          {/* <button className="text-sm font-medium">FR EN</button> */}
         </div>
       </div>
     </header>
-  );
+  )
+}
+
+function Dropdown({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="relative group inline-block">
+      <button
+        type="button"
+        className="text-sm font-medium hover:text-[color:var(--smile-navy)] focus:outline-none"
+      >
+        {label}
+      </button>
+      <div className="absolute left-0 top-full z-20 hidden min-w-[200px] rounded-lg border border-[color:var(--border)] bg-white shadow-lg group-hover:block group-focus-within:block">
+        {children}
+      </div>
+    </div>
+  )
 }

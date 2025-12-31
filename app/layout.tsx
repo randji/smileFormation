@@ -7,8 +7,8 @@ export const metadata: Metadata = {
     template: "%s | SMILE FORMATION",
   },
   description:
-    "Centre de formation: langues (français, anglais, espagnol...), bureautique (Word, Excel, PowerPoint) et IA. La formation qui vous donne le sourire. Locaux accessibles PSH/PMR",
-  metadataBase: new URL("https://example.com"),
+    "Centre de formation: bureautique (Word, Excel, PowerPoint, canva). La formation qui vous donne le sourire. Locaux accessibles PSH/PMR",
+  metadataBase: new URL("https://smileformation.fr"),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

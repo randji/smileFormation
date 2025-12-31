@@ -19,23 +19,7 @@ function normalizeLabel(s: string) {
 }
 
 export function TrainingsSection({ tabs, trainings }: TrainingsSectionProps) {
-  // Masque temporairement certains onglets (réversibles plus tard)
-  const hidden = new Set(["langues", "ia", "tous"]) // labels normalisés
-  const visibleTabs = useMemo(
-    () => tabs.filter((t) => !hidden.has(normalizeLabel(t))),
-    [tabs]
-  )
-
-  const [active, setActive] = useState<string>(visibleTabs[0] ?? tabs[0])
-
-  // Si la liste visible change (ou devient vide), réaligne l'onglet actif
-  useEffect(() => {
-    if (!visibleTabs.length) {
-      setActive("")
-    } else if (!visibleTabs.includes(active)) {
-      setActive(visibleTabs[0])
-    }
-  }, [visibleTabs, active])
+  const [active, setActive] = useState<string>(tabs[0])
 
   const filtered = useMemo(() => {
     const key = normalizeLabel(active || "")
@@ -45,9 +29,7 @@ export function TrainingsSection({ tabs, trainings }: TrainingsSectionProps) {
 
   return (
     <section>
-      {visibleTabs.length > 0 && (
-        <FilterTabs tabs={visibleTabs} onFilterChange={setActive} />
-      )}
+      {tabs.length > 0 && <FilterTabs tabs={tabs} onFilterChange={setActive} />}
       <TrainingGrid trainings={filtered} />
     </section>
   )
